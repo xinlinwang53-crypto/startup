@@ -24,24 +24,26 @@ College students often have fragmented schedule, making it difficult to know whe
 ![Design image](place.jpg)
 
 
-
 ```mermaid
 sequenceDiagram
     actor You
-    actor Website
+    participant Website
+    participant Server
+    participant WS as WebSocket
+    
     You->>Website: Login/Signup
     Website->>Server: Authenticate user
-    Server->>User Login Success
+    Server->>You Login Success
 
     You->>Website: Pick Status
     Website->>Server: update status
     Server->>WS: broadcast update
-    WS->>User: friend list update
+    WS->>You: friend list update
 
     You->>Website: Enter shared space
     Website->>Server: Join shared space
     Server->>WS: broadcast task
-    WS->>User: shared space update live
+    WS->>You: shared space update live
 
 
 ```
