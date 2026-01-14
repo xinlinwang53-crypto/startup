@@ -30,10 +30,10 @@ sequenceDiagram
     participant Website
     participant Server
     participant WS as WebSocket
-    
+
     You->>Website: Login/Signup
     Website->>Server: Authenticate user
-    Server->>You Login Success
+    Server->>You: Login Success
 
     You->>Website: Pick Status
     Website->>Server: update status
