@@ -17,37 +17,53 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
-College students often have fragmented schedule, making it difficult to know whether friends are available in a given moment. This app allows users to share simple status updates
+College students often have fragmented schedule, making it difficult to know whether friends are available in a given moment. This app allows users to share simple status updates so friends can understand each other’s availability without initiating a conversation. Even when busy, users can feel connected through shared study or activity spaces represented by virtual avatars.
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](place.jpg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
 
 ```mermaid
 sequenceDiagram
     actor You
     actor Website
-    You->>Website: Replace this with your design
+    You->>Website: Login/Signup
+    Website->>Server: Authenticate user
+    Server->>User Login Success
+
+    You->>Website: Pick Status
+    Website->>Server: update status
+    Server->>WS: broadcast update
+    WS->>User: friend list update
+
+    You->>Website: Enter shared space
+    Website->>Server: Join shared space
+    Server->>WS: broadcast task
+    WS->>User: shared space update live
+
+
 ```
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Users can regist or login and select one or more status tags
+- Users can see other's friends status and last updated time
+- Users can enter a shared study/play space with personal avatar
+- Users can write small task which will update to other people in the shared space. 
+
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - it builds the page which displays. It includes login page, main page(choose statu) and shared study space. 
+- **CSS** - It keeps the UI looks great with a clean layout.
+- **React** - It implements UI components and routing.
+- **Service** - It processes the statistics and passes to other parts
+- **DB/Login** - It remembers all the statistics.
+- **WebSocket** - It keeps real-time updates without refreshing. 
 
 ## 🚀 AWS deliverable
 
