@@ -77,15 +77,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - Function well with requirement
+- [x] **Proper HTML element usage** - Proper use of sturcture in every pages
+- [x] **Links** - Each page has links to GitHub
+- [x] **Text** - Each page has short text decribing 
+- [x] **3rd party API placeholder** - have it on about.html
+- [x] **Images** - Have at least one page
+- [x] **Login placeholder** - Login on index.html
+- [x] **DB data placeholder** - Have data in space.html
+- [x] **WebSocket placeholder** - Have it in status.html
 
 ## 🚀 CSS deliverable
 
