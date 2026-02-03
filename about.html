@@ -1,20 +1,44 @@
-<body>
-  <h1>StatusTag</h1>
-    <h2> Xinlin Wang</h2>
-</body>
-  
+<!DOCTYPE html>
+<html lang="en">
 
-  <header>
-    
-    <nav>Navigation
-       <div><a href="index.html">Main</a></div>
-      <div><a href="status.html">Status</a></div>
-      <div><a href="space.html">Space</a></div>
-      <div><a href="about.html">About</a></div>
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StatusTag</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="about.css" />
+
+
+</head>
+
+<body class="bg-info text-light">
+  <header class="container-fluid">
+    <nav class="navbar fixed-top navbar-dark">
+      <a class="navbar-brand" href="#">StatusTag<sup>&reg;</sup></a>
+      <menu class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="status.html">Status</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="space.html">Space</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">About</a>
+        </li>
+      </menu>
     </nav>
+
   </header>
 
-  <main>
+  <main class="container-fluid bg-secondary text-center">
     <p> This page is about the meaning of the website: build a space for friends to have fun together online </p>
     <section>
       <p>3rd party API placeholder (placeholder)</p>
@@ -24,14 +48,16 @@
         <li>Avatar API: Display Image</li>
       </ul>
     </section>
-    
-      <p>Aside</p>
-      <img alt="A nice photo" src="placeholder.jpg"
-                width=" 250" />
+    <aside>
+      <img alt="A nice photo" src="placeholder.jpg" width=" 250" />
     </aside>
   </main>
 
-  <footer>
-    <div>Footer - <span><a href="https://github.com/xinlinwang53-crypto/startup.git">github</a></span></div>
+
+  <footer class="bg-dark text-white-50">
+    <div class="container-fluid">
+      <span class="text-reset">Xinlin Wang</span>
+      <a class="text-reset" href="https://github.com/xinlinwang53-crypto/startup.git">GitHub</a>
+    </div>
   </footer>
 </body>
