@@ -55,9 +55,12 @@
 
 
 .toptable{
-  background-color: rgba(125, 40, 40, 0.4);
+  background-color: rgba(26, 155, 104, 0.4);
 }
 
+.tbody{
+  background-color: rgba(134, 148, 43, 0.4);
+}
 
 
 #count {

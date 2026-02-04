@@ -1,3 +1,28 @@
+.img-{
+  flex:0;
+  align-items: center;
+  gap: .75rem;
+  width: 1500px;
+  height: 150px;
+  object-fit: cover;
+  object-position: 50% 38%;}
+
+
+.title{
+  font-size: 50px;
+  font-weight: 2 em;
+  font-style: italic;
+}
+
+.API{
+  font-size: 20px;
+  font-weight: 1 em;
+}
+
+
+
+
+
 .picture-box {
   height: calc(100px + 1em);
   margin-bottom: 1em;
