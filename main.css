@@ -2,8 +2,16 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 375px;
+  
 }
 
+.my-theme {
+  background-color:#12f0a6
+}
+
+.main-theme {
+  background-color:aqua
+}
 header {
   flex: 0 80px;
 }
