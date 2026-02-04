@@ -1,3 +1,11 @@
+ @import
+  
+  url('https://fonts.googleapis.com/css2?family=Rubik Microbe&display=swap');
+
+
+
+
+
 body {
   display: flex;
   flex-direction: column;
@@ -14,6 +22,15 @@ body {
 }
 header {
   flex: 0 80px;
+}
+.h1-{
+  font-family : 'Nunito';
+  font-style: italic;
+  font-weight: 700;
+}
+
+.lg-theme {
+  background-color: #12f0a6;
 }
 
 main {
