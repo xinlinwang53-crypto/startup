@@ -1,5 +1,6 @@
 .all-area{
  display:flex;
+ flex-wrap: wrap;
  gap: 5rem;
 
 }
@@ -7,12 +8,14 @@
 
 
 .each-avatar{
+  display:flex;
  flex: 1;
  flex-direction: column;
  
 }
 
 .avatar-{
+  display:flex;
   flex:0;
   flex-direction: row;
   align-items: center;
@@ -24,8 +27,8 @@
 }
 
 .statue{
+  
   flex:1;
-  flex-direction: row;
   padding-top: 2.5rem;
   
   
@@ -42,4 +45,25 @@
   font-size: 30px;
   font-weight: bold;
   color : rgba(52, 52, 11, 0.4);
+}
+
+
+@media (max-height: 600px) {
+  header {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+  main {
+    flex: 1 100vh;
+  }
+}
+
+@media (orientation: portrait) {
+  .all-area {
+    flex-direction: column;
+    align-items: center;
+  
+  }
 }
