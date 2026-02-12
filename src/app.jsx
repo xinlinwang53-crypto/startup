@@ -19,7 +19,7 @@ export default function App() {
             </div>
             <menu className="navbar-nav">
               <li className="nav-item">
-                <NavLink className="nav-link" to="index">
+                <NavLink className="nav-link" to="">
                   Home
                 </NavLink>
               </li>
@@ -46,7 +46,7 @@ export default function App() {
 
 
         <Routes>
-          <Route path='/index' element={<Main />} exact />
+          <Route path='/' element={<Main />} exact />
           <Route path='/status' element={<Status />} />
           <Route path='/space' element={<Space />} />
           <Route path='/about' element={<About />} />
