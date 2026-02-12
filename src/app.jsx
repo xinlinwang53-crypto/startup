@@ -3,15 +3,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
-import { Main } from './main/main';
-import { Status } from './status/status';
-import { Space } from './space/space';
-import { About } from './about/about';
+import { Main } from './main/main.jsx';
+import { Status } from './status/status.jsx';
+import { Space } from './space/space.jsx';
+import { About } from './about/about.jsx';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="text-light my-theme">
+      <div className="body text-light my-theme">
         <header className="container-fluid">
           <nav className="navbar fixed-top navbar-dark">
             <div className="navbar-brand">
@@ -19,22 +19,22 @@ export default function App() {
             </div>
             <menu className="navbar-nav">
               <li className="nav-item">
-                <NavLink className="nav-link" href="index.html">
+                <NavLink className="nav-link" to="index">
                   Home
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" href="status.html">
+                <NavLink className="nav-link" to="status">
                   Status
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" href="space.html">
+                <NavLink className="nav-link" to="space">
                   Space
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" href="about.html">
+                <NavLink className="nav-link" to="about">
                   About
                 </NavLink>
               </li>
@@ -42,11 +42,11 @@ export default function App() {
           </nav>
         </header>
 
-        <main>App components go here</main>
+
 
 
         <Routes>
-          <Route path='/' element={<Main />} exact />
+          <Route path='/index' element={<Main />} exact />
           <Route path='/status' element={<Status />} />
           <Route path='/space' element={<Space />} />
           <Route path='/about' element={<About />} />
