@@ -2,8 +2,15 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Main } from './main/main';
+import { States } from './status/status';
+import { Space } from './space/spaces';
+import { About } from './about/about';
+
 export default function App() {
   return (
+    <BrowserRouter>
     <div className="text-light my-theme">
       <header className="container-fluid">
         <nav className="navbar fixed-top navbar-dark">
@@ -12,24 +19,24 @@ export default function App() {
           </div>
           <menu className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="index.html">
+              <NavLink className="nav-link" href="index.html">
                 Home
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="status.html">
+              <NavLink className="nav-link" href="status.html">
                 Status
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="space.html">
+              <NavLink className="nav-link" href="space.html">
                 Space
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="about.html">
+              <NavLink className="nav-link" href="about.html">
                 About
-              </a>
+              </NavLink>
             </li>
           </menu>
         </nav>
@@ -46,5 +53,6 @@ export default function App() {
         </div>
       </footer>
     </div>
+    </BrowserRouter>
   );
 }
