@@ -41,7 +41,7 @@ https://codepen.io/xinlinwang53-crypto/pen/emzydRq
 
 ## React Part 1: Routing
 
-Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
+This one is easy. Only problem is some minor problem when putting app.jsx. Lots of stuff to be caution for. Ex, Add body in div.
 
 ## React Part 2: Reactivity
 
