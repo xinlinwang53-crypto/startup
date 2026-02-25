@@ -32,7 +32,7 @@ export function Unauthenticated(props) {
         <button type="button" className="btn lg-theme" onClick={() => loginUser()} disabled={!userName || !password}>
           Login
         </button>
-        <button type="button" className="btn" onClick={() => createUser()} disabled={!userName || !password}>
+        <button type="button" className="btn lg-theme-2" onClick={() => createUser()} disabled={!userName || !password}>
           Create
         </button>
       </div>
