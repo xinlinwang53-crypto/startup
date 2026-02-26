@@ -30,7 +30,7 @@ class SpaceEventNotifier {
       }
 
       this.flip = !this.flip;
-    }, 3000);
+    }, 1000);
   }
       
   broadcastEvent(from, type, value) {
