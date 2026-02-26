@@ -2,39 +2,6 @@ import React from 'react';
 import './status.css';
 
 export function Status() {
-    const [status, setStatus] = React.useState([]);
-    React.useEffect(() => {
-      const statusText = localStorage.getItem('status');
-      if (statusText) {
-        setStatus(JSON.parse(statusText));
-      }
-    }, [])
-  
-    // Demonstrates rendering an array with React
-    const statusRows = [];
-    if (status.length) {
-      for (const [i, statu] of status.entries()) {
-        statusRows.push(
-          <tr key={i}>
-            <td>{i}</td>
-            <td>{statu.name.split('@')[0]}</td>
-            <td>{statu.status}</td>
-            <td>{statu.present}</td>
-            <td>{statu.date}</td>
-          </tr>
-        );
-      }
-    } else {
-      statusRows.push(
-        <tr key='0'>
-          <td colSpan='5' className="h2-"><h5>Tell your friend to join!</h5></td>
-        </tr>
-      );
-    }
-  
-  
-
-  
   return (
    <main className="main-theme grid-sepe">
     <section className="left">
@@ -64,18 +31,40 @@ export function Status() {
       </div>
     </section>
     <section className="right">
-       <table className='table  table-striped-columns'>
-          <thead className='toptable'>
-            <tr>
-              <th>Friend</th>
-              <th>Name</th>
-              <th>Current Status</th>
-              <th>Present</th>
-              <th>Last present time</th>
-            </tr>
-          </thead>
-          <tbody id='status'>{statusRows}</tbody>
-        </table>
+      <table className="table table-striped-columns">
+        <thead className="toptable">
+          <tr>
+            <th>Friend</th>
+            <th>Name</th>
+            <th>Current Status</th>
+            <th>Present</th>
+            <th>Last present time</th>
+          </tr>
+        </thead>
+        <tbody className="tbody">
+          <tr>
+            <td>1</td>
+            <td>JUlia</td>
+            <td>Open to talk</td>
+            <td>Y</td>
+            <td>22:00/2/3</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Annie</td>
+            <td>Do not disturb</td>
+            <td>Y</td>
+            <td>22:00/2/3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Annie</td>
+            <td>Do not disturb</td>
+            <td>Y</td>
+            <td>22:00/2/3</td> 
+          </tr>
+        </tbody>
+      </table>
     
 
     </section>

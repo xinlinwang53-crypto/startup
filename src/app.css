@@ -29,6 +29,12 @@ header {
   font-weight: 700;
 }
 
+.h2-{
+  font-family : 'Nunito';
+  font-style: italic;
+  font-weight: 700;
+  text-align: center;
+}
 .lg-theme {
   background-color: #12f0a6;
 }
