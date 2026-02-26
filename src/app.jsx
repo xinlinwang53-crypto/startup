@@ -71,8 +71,8 @@ function App() {
             exact
           />
           <Route path='/status' element={<Status userName={userName} />} />
-          <Route path='/space' element={<Space />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/space' element={<Space userName={userName}/>} />
+          <Route path='/about' element={<About userName={userName}/>} />
           <Route path='*' element={<NotFound />} />
         </Routes>
 

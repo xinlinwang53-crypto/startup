@@ -1,18 +1,44 @@
 import React from 'react';
 import './status.css';
 
-export function Status() {
+export function Status(props) {
+
     const [status, setStatus] = React.useState([]);
     React.useEffect(() => {
+      const username =  props.username|| localStorage.getItem('userName') || 'Xinlin';;
+
+  const defaultStatus = [
+    {
+      name: username,
+      status: 'Studying',
+      present: 'Online',
+      date: new Date().toLocaleString(),
+    },
+    {
+      name: 'lily@byu.edu',
+      status: 'Open to talk',
+      present: 'Offline',
+      date: '2/24/2026 10:30 AM',
+    },
+    {
+      name: 'jimmy@byu.edu',
+      status: 'Coding',
+      present: 'Online',
+      date: '2/24/2026 11:10 AM',
+    },
+  ];
       const statusText = localStorage.getItem('status');
       if (statusText) {
         setStatus(JSON.parse(statusText));
+      }else{
+        setStatus(defaultStatus);
       }
-    }, [])
+    }, [props.username])
   
     // Demonstrates rendering an array with React
     const statusRows = [];
-    if (status.length) {
+    //if (status.length) { store for future
+    if (status.length){
       for (const [i, statu] of status.entries()) {
         statusRows.push(
           <tr key={i}>
