@@ -13,6 +13,7 @@ function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = React.useState(currentAuthState);
+  const [mystatus, setmystatus] = React.useState(localStorage.getItem('mystatus') || '');
 
   return (
     <BrowserRouter>
@@ -72,7 +73,7 @@ function App() {
           />
           <Route path='/status' element={<Status userName={userName} />} />
           <Route path='/space' element={<Space userName={userName}/>} />
-          <Route path='/about' element={<About userName={userName}/>} />
+          <Route path='/about' element={<About userName={userName} />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
 
