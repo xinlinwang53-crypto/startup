@@ -6,12 +6,25 @@ const app = express();
 
 const authCookieName = 'token';
 
-// The scores and users are saved in memory and disappear whenever the service is restarted.
+/* The scores and users are saved in memory and disappear whenever the service is restarted.
 let users = [];
 let scores = [];
+*/
+
+let name = [];
+let statuses = [];
+
+
+/*
+name: username,
+status: mystatus,
+present: 'Online',
+date: new Date().toLocaleString(),
+*/
+        
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
-const port = process.argv.length > 2 ? process.argv[2] : 3000;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 // JSON body parsing using built-in middleware
 app.use(express.json());
@@ -73,14 +86,28 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // GetScores
-apiRouter.get('/scores', verifyAuth, (_req, res) => {
-  res.send(scores);
+apiRouter.get('/status', verifyAuth, (_req, res) => {
+  res.send(statuses);
 });
 
 // SubmitScore
-apiRouter.post('/score', verifyAuth, (req, res) => {
-  scores = updateScores(req.body);
-  res.send(scores);
+apiRouter.post('/status', verifyAuth, (req, res) => {
+  const newStatus = {
+    name: req.user.email,
+    status: req.body.status,
+    present: req.body.present,
+    date: new Date().toLocaleString(),
+  };
+
+  const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
+
+  if (existingIndex >= 0) {
+    statuses[existingIndex] = newStatus;
+  } else {
+    statuses.push(newStatus);
+  }
+
+  res.send(statuses);
 });
 
 // Default error handler
@@ -93,27 +120,6 @@ app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
-// updateScores considers a new score for inclusion in the high scores.
-function updateScores(newScore) {
-  let found = false;
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
-    }
-  }
-
-  if (!found) {
-    scores.push(newScore);
-  }
-
-  if (scores.length > 10) {
-    scores.length = 10;
-  }
-
-  return scores;
-}
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
