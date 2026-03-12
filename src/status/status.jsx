@@ -68,19 +68,26 @@ export function Status(props) {
   }
 
   const updateMyStatus = (newStatusText) => {
-    setmystatus(newStatusText);
-    localStorage.setItem("mystatus", newStatusText);
 
-  const updatedArray = status.map((item) => {
-      if (item.name === username) {
-        return { ...item, status: newStatusText, date: new Date().toLocaleString() };
-      }
-      return item;
+
+    fetch('/api/status', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: username,
+      status: newStatusText,
+      present: 'Online',
+      date: new Date().toLocaleString(),
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setStatus(data);
     });
+};
 
-  setStatus(updatedArray);
-  localStorage.setItem('status', JSON.stringify(updatedArray));
-  };
 
   const options = [
     "Open to talk", "In class", "Studying", "Having breakfast", "Having lunch", 
