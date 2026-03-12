@@ -73,3 +73,9 @@ Handling the toggling of the checkboxes was particularly interesting.
 ##startup service
 
 这边大概就是连接后端，api
+
+优化建议：
+选择图片
+可以tyoe状态
+可以选择是否进入space
+space可以优化

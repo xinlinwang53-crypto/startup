@@ -52,10 +52,10 @@ export function Space(props) {
         return (
           <main className="container-fluid text-center main-theme">
             <div className="all-area">
-              {online.map((u) => (
-                <section className="each-avatar" key={u.id}>
+              {online.map((u,i) => (
+                <section className="each-avatar" key={i}>
                   <div className="avatar-">
-                    <img className="avatar-" alt={u.name} src={u.avatar} />
+                    <img className="avatar-" alt={u.name} src={u.avatar || '/avatar.JPG'} />
                   </div>
 
                   <div className="statue">
