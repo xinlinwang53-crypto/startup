@@ -6,12 +6,8 @@ const app = express();
 
 const authCookieName = 'token';
 
-/* The scores and users are saved in memory and disappear whenever the service is restarted.
-let users = [];
-let scores = [];
-*/
 
-let name = [];
+let users = [];
 let statuses = [];
 
 
@@ -92,12 +88,7 @@ apiRouter.get('/status', verifyAuth, (_req, res) => {
 
 // SubmitScore
 apiRouter.post('/status', verifyAuth, (req, res) => {
-  const newStatus = {
-    name: req.user.email,
-    status: req.body.status,
-    present: req.body.present,
-    date: new Date().toLocaleString(),
-  };
+  const newStatus = req.body;
 
   const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
 
