@@ -11,6 +11,12 @@ export function Status(props) {
 
 
   React.useEffect(() => {
+    fetch('/api/status')
+    .then((res) => res.json())
+    .then((data) => {
+      setStatus(data);
+    })
+    .catch(() => {
 
 
     const defaultStatus = [
@@ -33,12 +39,9 @@ export function Status(props) {
         date: '2/24/2026 11:10 AM',
       },
     ];
-    const statusText = localStorage.getItem('status');
-    if (statusText) {
-      setStatus(JSON.parse(statusText));
-    } else {
+
       setStatus(defaultStatus);
-    }
+    });
   }, [])
 
   // Demonstrates rendering an array with React
