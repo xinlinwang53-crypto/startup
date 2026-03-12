@@ -5,10 +5,10 @@ import { SpaceEvent, SpaceNotifier } from './spaceNotifier';
 import './space.css';
 
 export function Space(props) {
-  const userName = props.userName;
+  const username = props.userName.split('@')[0]
+  const currentstatus = localStorage.getItem('mystatus')
 
-
-  const A = { id: 'ammie', name: 'Ammie', status: 'In HBLL', avatar: '/avatar.JPG' };
+  const A = { id:username, name: username, status: currentstatus, avatar: '/avatar.JPG' };
   const B = { id: 'lily', name: 'Lily', status: 'Studying', avatar: '/avatar.JPG' };
   const C = { id: 'jimmy', name: 'Jimmy', status: 'Have lunch', avatar: '/dog.jpg' };
   const [online, setOnline] = React.useState([A,B,C]);

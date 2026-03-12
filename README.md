@@ -111,7 +111,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [x] **All functionality implemented or mocked out** - All pages function perfect.
-- [x] **Hooks** - I have well usage of useeffect, usestate and setinterval. The loginin page function perfectly. The status page contain a chart that updates the user's information with mock users. It also contains changeable buttons which updates in local storage. The space page contains setinterval.
+- [x] **Hooks** - I have well usage of useeffect, usestate and setinterval. The loginin page function perfectly. The status page contain a chart that updates the user's information with mock users. It also contains changeable buttons which updates in local storage. The space page contains setinterval, it also gets data from localstorage that updates with the status page. 
 
 ## 🚀 Service deliverable
 
