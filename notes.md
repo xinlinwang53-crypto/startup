@@ -79,3 +79,9 @@ Handling the toggling of the checkboxes was particularly interesting.
 可以tyoe状态
 可以选择是否进入space
 space可以优化
+
+只有朋友可以看见彼此
+主用户应该是第一个
+那个localstorage很有点问题，完全不建议用local、
+手机版点出来看着排版很垃圾
+offline 跟online这个要实现
