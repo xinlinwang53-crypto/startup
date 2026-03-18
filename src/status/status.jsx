@@ -2,11 +2,12 @@ import React from 'react';
 import './status.css';
 
 export function Status(props) {
-  const username = props.username || localStorage.getItem('userName') || 'Xinlin';;
+  const username = props.userName || localStorage.getItem('userName') || 'Xinlin';;
 
 
   const [mystatus, setmystatus] = React.useState(localStorage.getItem("mystatus") || "Studying");
   const [status, setStatus] = React.useState([])
+  const [friendName,setfrinedName] = React.useState([])
 
 
 
@@ -44,9 +45,9 @@ export function Status(props) {
     });
   }, [])
 
-  // Demonstrates rendering an array with React
+  
   const statusRows = [];
-  //if (status.length) { store for future
+  
   if (status.length) {
     for (const [i, statu] of status.entries()) {
       statusRows.push(
@@ -80,6 +81,7 @@ export function Status(props) {
       status: newStatusText,
       present: 'Online',
       date: new Date().toLocaleString(),
+      friendlist: '',
     }),
   })
     .then((res) => res.json())
@@ -94,6 +96,27 @@ export function Status(props) {
     "Having dinner", "Cooking", "Walking to class", "Office hour", "Work", 
     "In Wilkinson", "In HBLL", "In TMCB", "Coding", "Debugging", "Do not disturb"
   ];
+
+  const Updatefriendlist = (newfriendlist)=> {
+
+
+    fetch('/api/friends', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: username,
+      status: newStatusText,
+      present: 'Online',
+      date: new Date().toLocaleString(),
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setStatus(data);
+    });
+};
 
   return (
     <main className="main-theme grid-sepe">
@@ -110,6 +133,13 @@ export function Status(props) {
           ))}
 
          
+        </div>
+
+        <div className = "add-friend"> <input type='text' value={friendName} onChange={(e) => setfrinedName(e.target.value)} placeholder='xxx@email.com' />
+         <button type="button"  onClick={() => Updatefriendlist()} >
+          Addfriend
+        </button>
+
         </div>
 
       </section>
@@ -129,6 +159,7 @@ export function Status(props) {
 
 
       </section>
+
 
 
 

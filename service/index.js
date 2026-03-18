@@ -100,7 +100,20 @@ apiRouter.post('/status', verifyAuth, (req, res) => {
 
   res.send(statuses);
 });
+// update friendlist in status
+apiRouter.post('/friends', verifyAuth, (req, res) => {
+  const newStatus = req.body;
 
+  const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
+
+  if (existingIndex >= 0) {
+    statuses[existingIndex] = newStatus;
+  } else {
+    statuses.push(newStatus);
+  }
+
+  res.send(statuses);
+});
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
