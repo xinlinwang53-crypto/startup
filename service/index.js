@@ -65,6 +65,13 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
+    const existingIndex = statuses.findIndex((s) => s.name === user.email);
+
+    if (existingIndex >= 0) {
+      statuses[existingIndex].present = 'Offline';
+      statuses[existingIndex].date = new Date().toLocaleString();
+    }
+
     delete user.token;
   }
   res.clearCookie(authCookieName);
