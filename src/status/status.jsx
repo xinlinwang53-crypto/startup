@@ -7,47 +7,56 @@ export function Status(props) {
 
   const [mystatus, setmystatus] = React.useState(localStorage.getItem("mystatus") || "Studying");
   const [status, setStatus] = React.useState([])
-  const [friendName,setfriendName] = React.useState('')
+  const [friendName, setfriendName] = React.useState('')
+  const [friends, setFriends] = React.useState([]);
 
 
 
   React.useEffect(() => {
     fetch('/api/status')
-    .then((res) => res.json())
-    .then((data) => {
-      setStatus(data);
-    })
-    .catch(() => {
+      .then((res) => res.json())
+      .then((data) => {
+        setStatus(data);
+      })
+      .catch(() => {
 
 
-    const defaultStatus = [
-      {
-        name: username,
-        status: mystatus,
-        present: 'Online',
-        date: new Date().toLocaleString(),
-      },
-      {
-        name: 'lily@byu.edu',
-        status: 'Open to talk',
-        present: 'Offline',
-        date: '2/24/2026 10:30 AM',
-      },
-      {
-        name: 'jimmy@byu.edu',
-        status: 'Coding',
-        present: 'Online',
-        date: '2/24/2026 11:10 AM',
-      },
-    ];
+        const defaultStatus = [
+          {
+            name: username,
+            status: mystatus,
+            present: 'Online',
+            date: new Date().toLocaleString(),
+          },
+          {
+            name: 'lily@byu.edu',
+            status: 'Open to talk',
+            present: 'Offline',
+            date: '2/24/2026 10:30 AM',
+          },
+          {
+            name: 'jimmy@byu.edu',
+            status: 'Coding',
+            present: 'Online',
+            date: '2/24/2026 11:10 AM',
+          },
+        ];
 
-      setStatus(defaultStatus);
-    });
+        setStatus(defaultStatus);
+      });
+
+    fetch('/api/friends')
+      .then((res) => res.json())
+      .then((data) => {
+        setFriends(data);
+      });
   }, [])
 
-  
+
+
+
   const statusRows = [];
-  
+
   if (status.length) {
     for (const [i, statu] of status.entries()) {
       statusRows.push(
@@ -72,55 +81,60 @@ export function Status(props) {
 
 
     fetch('/api/status', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: username,
-      status: newStatusText,
-      present: 'Online',
-      date: new Date().toLocaleString(),
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      setStatus(data);
-      
-    });
-};
-
-
-  const options = [
-    "Open to talk", "In class", "Studying", "Having breakfast", "Having lunch", 
-    "Having dinner", "Cooking", "Walking to class", "Office hour", "Work", 
-    "In Wilkinson", "In HBLL", "In TMCB", "Coding", "Debugging", "Do not disturb"
-  ];
-
-  const Updatefriendlist = ()=> {
-
-
-    fetch('/api/friends', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      friend: friendName
-    }),
-  })
-    .then((res) => res.json())
-    .then(() => {
-
-      return fetch('/api/status');
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: username,
+        status: newStatusText,
+        present: 'Online',
+        date: new Date().toLocaleString(),
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
-      setStatus(data);
-      setFriendName('');
+        setStatus(data);
+
+      });
+  };
+
+
+  const options = [
+    "Open to talk", "In class", "Studying", "Having breakfast", "Having lunch",
+    "Having dinner", "Cooking", "Walking to class", "Office hour", "Work",
+    "In Wilkinson", "In HBLL", "In TMCB", "Coding", "Debugging", "Do not disturb"
+  ];
+
+  const Updatefriendlist = () => {
+
+
+    fetch('/api/friends', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        friend: friendName
+      }),
     })
-      
-};
+      .then((res) => res.json())
+      .then(() => {
+        return fetch('/api/friends');
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        setFriends(data);  
+        return fetch('/api/status');
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        setStatus(data);
+        setFriendName('');
+
+      })
+
+  };
 
   return (
     <main className="main-theme grid-sepe">
@@ -136,15 +150,30 @@ export function Status(props) {
             </button>
           ))}
 
-         
-        </div>
-
-        <div className = "add-friend"> <input type='text' value={friendName} onChange={(e) => setfriendName(e.target.value)} placeholder='xxx@email.com' />
-         <button type="button"  onClick={() => Updatefriendlist()} >
-          Addfriend
-        </button>
 
         </div>
+
+        <section className="add-friend">
+
+          <div> <input type='text' value={friendName} onChange={(e) => setfriendName(e.target.value)} placeholder='xxx@email.com' />
+            <button type="button" onClick={() => Updatefriendlist()} >
+              Addfriend
+            </button>
+          </div>
+
+          <div className="friend-list">
+            <h4>My Friends:</h4>
+            {friends.length ? (
+              friends.map((f, i) => <div key={i}>{f}</div>)
+            ) : (
+              <div>No friends yet</div>
+            )}
+          </div>
+
+
+        </section>
+
+
 
       </section>
       <section className="right">

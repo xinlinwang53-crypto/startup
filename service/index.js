@@ -82,9 +82,9 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // GetScores
-apiRouter.get('/status', verifyAuth, (_req, res) => {
-  const user = findUser('token', req.cookies[authCookieName]);
-  friendlist = user.friend;
+apiRouter.get('/status', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+  const friends = user.friends || [];
   const visible = statuses.filter((s) => {
   return (
     s.name === user.email || 
@@ -111,17 +111,24 @@ apiRouter.post('/status', verifyAuth, (req, res) => {
   res.send(statuses);
 });
 // update friendlist in status
-apiRouter.post('/friends', verifyAuth, (req, res) => {
+apiRouter.post('/friends', verifyAuth, async (req, res) => {
   const newfriend = req.body.friend;
 
-  const user = findUser('token', req.cookies[authCookieName]);
+  const user = await findUser('token', req.cookies[authCookieName]);
 
 
-  user.friend.push(newfriend);
+  user.friends.push(newfriend);
   
 
-  res.send(statuses);
+  res.send(user.friends);
 });
+//obtain friend list 
+apiRouter.get('/friends', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+
+  res.send(user.friends || []);
+});
+
 // Default error handler
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
@@ -140,7 +147,7 @@ async function createUser(email, password) {
     email: email,
     password: passwordHash,
     token: uuid.v4(),
-    friend: '',
+    friends: [],
   };
   users.push(user);
 
