@@ -86,10 +86,10 @@ export function Status(props) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        name: username,
+        
         status: newStatusText,
         present: 'Online',
-        date: new Date().toLocaleString(),
+        
       }),
     })
       .then((res) => res.json())

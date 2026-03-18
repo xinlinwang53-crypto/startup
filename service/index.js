@@ -101,8 +101,15 @@ apiRouter.get('/status', verifyAuth, async (req, res) => {
   });
 
   // SubmitScore
-  apiRouter.post('/status', verifyAuth, (req, res) => {
-    const newStatus = req.body;
+  apiRouter.post('/status', verifyAuth, async (req, res) => {
+    const user = await findUser('token', req.cookies[authCookieName]);
+
+    const newStatus = {
+      name: user.email,
+      status: req.body.status,
+      present:req.body.present || 'Online',
+      date: new Date().toLocaleString(),
+    };
 
     const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
 
