@@ -93,6 +93,8 @@ export function Status(props) {
       }),
     })
       .then((res) => res.json())
+      .then(() => fetch('/api/status'))
+      .then((res) => res.json())
       .then((data) => {
         setStatus(data);
 

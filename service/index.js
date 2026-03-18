@@ -17,7 +17,7 @@ status: mystatus,
 present: 'Online',
 date: new Date().toLocaleString(),
 */
-        
+
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -86,90 +86,94 @@ apiRouter.get('/status', verifyAuth, async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   const friends = user.friends || [];
   const visible = statuses.filter((s) => {
-  return (
-    s.name === user.email || 
-    friends.includes(s.name)
-  );
-});
+    return (
+      s.name === user.email ||
+      friends.includes(s.name)
+    );
+  });
+    visible.sort((a, b) => {
+      if (a.name === user.email) return -1;
+      if (b.name === user.email) return 1;
+      return 0;
+    });
 
-  
-  res.send(visible);
-});
+    res.send(visible);
+  });
 
-// SubmitScore
-apiRouter.post('/status', verifyAuth, (req, res) => {
-  const newStatus = req.body;
+  // SubmitScore
+  apiRouter.post('/status', verifyAuth, (req, res) => {
+    const newStatus = req.body;
 
-  const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
+    const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
 
-  if (existingIndex >= 0) {
-    statuses[existingIndex] = newStatus;
-  } else {
-    statuses.push(newStatus);
+    if (existingIndex >= 0) {
+      statuses[existingIndex] = newStatus;
+    } else {
+      statuses.push(newStatus);
+    }
+
+    res.send(statuses);
+  });
+  // update friendlist in status
+  apiRouter.post('/friends', verifyAuth, async (req, res) => {
+    const newfriend = req.body.friend;
+
+    const user = await findUser('token', req.cookies[authCookieName]);
+
+
+    user.friends.push(newfriend);
+
+
+    res.send(user.friends);
+  });
+  //obtain friend list 
+  apiRouter.get('/friends', verifyAuth, async (req, res) => {
+    const user = await findUser('token', req.cookies[authCookieName]);
+
+    res.send(user.friends || []);
+  });
+
+  // Default error handler
+  app.use(function (err, req, res, next) {
+    res.status(500).send({ type: err.name, message: err.message });
+  });
+
+  // Return the application's default page if the path is unknown
+  app.use((_req, res) => {
+    res.sendFile('index.html', { root: 'public' });
+  });
+
+
+  async function createUser(email, password) {
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = {
+      email: email,
+      password: passwordHash,
+      token: uuid.v4(),
+      friends: [],
+    };
+    users.push(user);
+
+    return user;
   }
 
-  res.send(statuses);
-});
-// update friendlist in status
-apiRouter.post('/friends', verifyAuth, async (req, res) => {
-  const newfriend = req.body.friend;
+  async function findUser(field, value) {
+    if (!value) return null;
 
-  const user = await findUser('token', req.cookies[authCookieName]);
+    return users.find((u) => u[field] === value);
+  }
 
+  // setAuthCookie in the HTTP response
+  function setAuthCookie(res, authToken) {
+    res.cookie(authCookieName, authToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+      secure: true,
+      httpOnly: true,
+      sameSite: 'strict',
+    });
+  }
 
-  user.friends.push(newfriend);
-  
-
-  res.send(user.friends);
-});
-//obtain friend list 
-apiRouter.get('/friends', verifyAuth, async (req, res) => {
-  const user = await findUser('token', req.cookies[authCookieName]);
-
-  res.send(user.friends || []);
-});
-
-// Default error handler
-app.use(function (err, req, res, next) {
-  res.status(500).send({ type: err.name, message: err.message });
-});
-
-// Return the application's default page if the path is unknown
-app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
-});
-
-
-async function createUser(email, password) {
-  const passwordHash = await bcrypt.hash(password, 10);
-
-  const user = {
-    email: email,
-    password: passwordHash,
-    token: uuid.v4(),
-    friends: [],
-  };
-  users.push(user);
-
-  return user;
-}
-
-async function findUser(field, value) {
-  if (!value) return null;
-
-  return users.find((u) => u[field] === value);
-}
-
-// setAuthCookie in the HTTP response
-function setAuthCookie(res, authToken) {
-  res.cookie(authCookieName, authToken, {
-    maxAge: 1000 * 60 * 60 * 24 * 365,
-    secure: true,
-    httpOnly: true,
-    sameSite: 'strict',
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
   });
-}
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
