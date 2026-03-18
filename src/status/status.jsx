@@ -9,6 +9,7 @@ export function Status(props) {
   const [status, setStatus] = React.useState([])
   const [friendName, setfriendName] = React.useState('')
   const [friends, setFriends] = React.useState([]);
+  const [avatar, setAvatar] = React.useState('/avatar.JPG');
 
 
 
@@ -50,6 +51,12 @@ export function Status(props) {
       .then((data) => {
         setFriends(data);
       });
+
+    fetch('/api/avatar')
+      .then((res) => res.json())
+      .then((data) => {
+        setAvatar(data.avatar);
+      });
   }, [])
 
 
@@ -86,10 +93,10 @@ export function Status(props) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        
+
         status: newStatusText,
         present: 'Online',
-        
+
       }),
     })
       .then((res) => res.json())
@@ -126,7 +133,7 @@ export function Status(props) {
       })
       .then((res) => res.json())
       .then((data) => {
-        setFriends(data);  
+        setFriends(data);
         return fetch('/api/status');
       })
       .then((res) => res.json())
@@ -138,12 +145,41 @@ export function Status(props) {
 
   };
 
+  const updateAvatar = (newAvatar) => {
+    fetch('/api/avatar', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        avatar: newAvatar,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setAvatar(data.avatar);
+      });
+  };
+
   return (
     <main className="main-theme grid-sepe">
       <section className="left">
         <div>
-          <img className="avatar" alt="A nice photo" src="/avatar.JPG" />
+          <img className="avatar" alt="A nice photo" src={avatar} />
         </div>
+
+        <div className="avatar-picker">
+          {['/avatar1.JPG', '/avatar2.JPG', '/avatar3.JPG', '/avatar4.JPG'].map((img) => (
+            <img
+              key={img}
+              src={img}
+              alt="avatar option"
+              className="avatar-option"
+              onClick={() => updateAvatar(img)}
+            />
+          ))}
+        </div>
+
         <div className="tag">
 
           {options.map((opt) => (

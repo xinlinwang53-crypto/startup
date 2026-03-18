@@ -98,96 +98,122 @@ apiRouter.get('/status', verifyAuth, async (req, res) => {
       friends.includes(s.name)
     );
   });
-    visible.sort((a, b) => {
-      if (a.name === user.email) return -1;
-      if (b.name === user.email) return 1;
-      return 0;
-    });
-
-    res.send(visible);
+  visible.sort((a, b) => {
+    if (a.name === user.email) return -1;
+    if (b.name === user.email) return 1;
+    return 0;
   });
 
-  // SubmitScore
-  apiRouter.post('/status', verifyAuth, async (req, res) => {
-    const user = await findUser('token', req.cookies[authCookieName]);
+  res.send(visible);
+});
 
-    const newStatus = {
-      name: user.email,
-      status: req.body.status,
-      present:req.body.present || 'Online',
-      date: new Date().toLocaleString(),
-    };
+// SubmitScore
+apiRouter.post('/status', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
 
-    const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
+  const newStatus = {
+    name: user.email,
+    status: req.body.status,
+    present: req.body.present || 'Online',
+    date: new Date().toLocaleString(),
+  };
 
-    if (existingIndex >= 0) {
-      statuses[existingIndex] = newStatus;
-    } else {
-      statuses.push(newStatus);
-    }
+  const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
 
-    res.send(statuses);
-  });
-  // update friendlist in status
-  apiRouter.post('/friends', verifyAuth, async (req, res) => {
-    const newfriend = req.body.friend;
-
-    const user = await findUser('token', req.cookies[authCookieName]);
-
-
-    user.friends.push(newfriend);
-
-
-    res.send(user.friends);
-  });
-  //obtain friend list 
-  apiRouter.get('/friends', verifyAuth, async (req, res) => {
-    const user = await findUser('token', req.cookies[authCookieName]);
-
-    res.send(user.friends || []);
-  });
-
-  // Default error handler
-  app.use(function (err, req, res, next) {
-    res.status(500).send({ type: err.name, message: err.message });
-  });
-
-  // Return the application's default page if the path is unknown
-  app.use((_req, res) => {
-    res.sendFile('index.html', { root: 'public' });
-  });
-
-
-  async function createUser(email, password) {
-    const passwordHash = await bcrypt.hash(password, 10);
-
-    const user = {
-      email: email,
-      password: passwordHash,
-      token: uuid.v4(),
-      friends: [],
-    };
-    users.push(user);
-
-    return user;
+  if (existingIndex >= 0) {
+    statuses[existingIndex] = newStatus;
+  } else {
+    statuses.push(newStatus);
   }
 
-  async function findUser(field, value) {
-    if (!value) return null;
+  res.send(statuses);
+});
+// update friendlist in status
+apiRouter.post('/friends', verifyAuth, async (req, res) => {
+  const newfriend = req.body.friend;
 
-    return users.find((u) => u[field] === value);
+  const user = await findUser('token', req.cookies[authCookieName]);
+
+
+  user.friends.push(newfriend);
+
+
+  res.send(user.friends);
+});
+//obtain friend list 
+apiRouter.get('/friends', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+
+  res.send(user.friends || []);
+});
+
+// Default error handler
+app.use(function (err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
+});
+
+// Return the application's default page if the path is unknown
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public' });
+});
+
+//Update avatar
+
+apiRouter.post('/avatar', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+
+  if (user) {
+    user.avatar = req.body.avatar;
+    res.send({ avatar: user.avatar });
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
   }
+});
 
-  // setAuthCookie in the HTTP response
-  function setAuthCookie(res, authToken) {
-    res.cookie(authCookieName, authToken, {
-      maxAge: 1000 * 60 * 60 * 24 * 365,
-      secure: true,
-      httpOnly: true,
-      sameSite: 'strict',
-    });
+//GEt avatar
+
+apiRouter.get('/avatar', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+
+  if (user) {
+    res.send({ avatar: user.avatar || '/avatar1.JPG' });
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
   }
+});
 
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+
+async function createUser(email, password) {
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const user = {
+    email: email,
+    password: passwordHash,
+    token: uuid.v4(),
+    friends: [],
+    avatar: '/avatar.JPG',
+  };
+  users.push(user);
+
+  return user;
+}
+
+async function findUser(field, value) {
+  if (!value) return null;
+
+  return users.find((u) => u[field] === value);
+}
+
+// setAuthCookie in the HTTP response
+function setAuthCookie(res, authToken) {
+  res.cookie(authCookieName, authToken, {
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
   });
+}
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});

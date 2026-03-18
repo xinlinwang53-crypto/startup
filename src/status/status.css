@@ -1,3 +1,12 @@
+.main-theme{
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-left: 40px;
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+
 .grid-sepe{
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -21,6 +30,26 @@
   border-radius: 50%;
   object-fit: cover;
 
+}
+.avatar-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.avatar-option {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.avatar-option:hover {
+  border: 2px solid #666;
 }
 
 .tag{display: flex;
