@@ -83,7 +83,17 @@ const verifyAuth = async (req, res, next) => {
 
 // GetScores
 apiRouter.get('/status', verifyAuth, (_req, res) => {
-  res.send(statuses);
+  const user = findUser('token', req.cookies[authCookieName]);
+  friendlist = user.friend;
+  const visible = statuses.filter((s) => {
+  return (
+    s.name === user.email || 
+    friends.includes(s.name)
+  );
+});
+
+  
+  res.send(visible);
 });
 
 // SubmitScore
@@ -102,15 +112,13 @@ apiRouter.post('/status', verifyAuth, (req, res) => {
 });
 // update friendlist in status
 apiRouter.post('/friends', verifyAuth, (req, res) => {
-  const newStatus = req.body;
+  const newfriend = req.body.friend;
 
-  const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
+  const user = findUser('token', req.cookies[authCookieName]);
 
-  if (existingIndex >= 0) {
-    statuses[existingIndex] = newStatus;
-  } else {
-    statuses.push(newStatus);
-  }
+
+  user.friend.push(newfriend);
+  
 
   res.send(statuses);
 });
@@ -132,6 +140,7 @@ async function createUser(email, password) {
     email: email,
     password: passwordHash,
     token: uuid.v4(),
+    friend: '',
   };
   users.push(user);
 

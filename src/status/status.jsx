@@ -7,7 +7,7 @@ export function Status(props) {
 
   const [mystatus, setmystatus] = React.useState(localStorage.getItem("mystatus") || "Studying");
   const [status, setStatus] = React.useState([])
-  const [friendName,setfrinedName] = React.useState([])
+  const [friendName,setfriendName] = React.useState('')
 
 
 
@@ -81,12 +81,12 @@ export function Status(props) {
       status: newStatusText,
       present: 'Online',
       date: new Date().toLocaleString(),
-      friendlist: '',
     }),
   })
     .then((res) => res.json())
     .then((data) => {
       setStatus(data);
+      
     });
 };
 
@@ -97,7 +97,7 @@ export function Status(props) {
     "In Wilkinson", "In HBLL", "In TMCB", "Coding", "Debugging", "Do not disturb"
   ];
 
-  const Updatefriendlist = (newfriendlist)=> {
+  const Updatefriendlist = ()=> {
 
 
     fetch('/api/friends', {
@@ -106,16 +106,20 @@ export function Status(props) {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      name: username,
-      status: newStatusText,
-      present: 'Online',
-      date: new Date().toLocaleString(),
+      friend: friendName
     }),
   })
     .then((res) => res.json())
-    .then((data) => {
+    .then(() => {
+
+      return fetch('/api/status');
+    })
+      .then((res) => res.json())
+      .then((data) => {
       setStatus(data);
-    });
+      setFriendName('');
+    })
+      
 };
 
   return (
@@ -135,7 +139,7 @@ export function Status(props) {
          
         </div>
 
-        <div className = "add-friend"> <input type='text' value={friendName} onChange={(e) => setfrinedName(e.target.value)} placeholder='xxx@email.com' />
+        <div className = "add-friend"> <input type='text' value={friendName} onChange={(e) => setfriendName(e.target.value)} placeholder='xxx@email.com' />
          <button type="button"  onClick={() => Updatefriendlist()} >
           Addfriend
         </button>
