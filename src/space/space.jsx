@@ -9,8 +9,10 @@ export function Space(props) {
   const currentstatus = localStorage.getItem('mystatus') || 'studying';
 
   const [online, setOnline] = React.useState([]);
+  const [avatar, setAvatar] = React.useState('/avatar1.JPG');
 
   React.useEffect(() => {
+
     fetch('/api/status')
       .then((res) => res.json())
       .then((data) => {
@@ -23,6 +25,13 @@ export function Space(props) {
         const C = { id: 'jimmy', name: 'Jimmy', status: 'Have lunch', avatar: '/dog.jpg' };
         setOnline([A, B, C]);
       });
+
+      fetch('/api/avatar')
+      .then((res) => res.json())
+      .then((data) => {
+        setAvatar(data.avatar);
+      })
+
     },[username,currentstatus]);
 
         /*
@@ -55,7 +64,7 @@ export function Space(props) {
               {online.map((u,i) => (
                 <section className="each-avatar" key={i}>
                   <div className="avatar-">
-                    <img className="avatar-" alt={u.name} src={u.avatar || '/avatar.JPG'} />
+                    <img className="avatar-" alt={u.name} src={avatar} />
                   </div>
 
                   <div className="statue">

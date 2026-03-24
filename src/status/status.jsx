@@ -68,7 +68,13 @@ export function Status(props) {
     for (const [i, statu] of status.entries()) {
       statusRows.push(
         <tr key={i}>
-          <td>{i}</td>
+          <td><img
+
+            src={avatar}
+            alt="avatar option"
+            className="avatar-option"
+          />
+          </td>
           <td>{statu.name.split('@')[0]}</td>
           <td>{statu.status}</td>
           <td>{statu.present}</td>
@@ -163,6 +169,7 @@ export function Status(props) {
 
   return (
     <main className="main-theme grid-sepe">
+
       <section className="left">
         <div>
           <img className="avatar" alt="A nice photo" src={avatar} />
@@ -191,10 +198,16 @@ export function Status(props) {
 
         </div>
 
+
+
+
+
+      </section>
+      <section className="right">
         <section className="add-friend">
 
-          <div> <input type='text' value={friendName} onChange={(e) => setfriendName(e.target.value)} placeholder='xxx@email.com' />
-            <button type="button" onClick={() => Updatefriendlist()} >
+          <div> <input className="friend-name" type='text' value={friendName} onChange={(e) => setfriendName(e.target.value)} placeholder='xxx@email.com' />
+            <button className="add-friend" type="button" onClick={() => Updatefriendlist()} >
               Addfriend
             </button>
           </div>
@@ -202,7 +215,7 @@ export function Status(props) {
           <div className="friend-list">
             <h4>My Friends:</h4>
             {friends.length ? (
-              friends.map((f, i) => <div key={i}>{f}</div>)
+              friends.map((f, i) => <div key={i} className="friend-list">{f}</div>)
             ) : (
               <div>No friends yet</div>
             )}
@@ -211,10 +224,6 @@ export function Status(props) {
 
         </section>
 
-
-
-      </section>
-      <section className="right">
         <table className='table  table-striped-columns'>
           <thead className='toptable'>
             <tr>
