@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+const DB = require('./database.js');
 
 const authCookieName = 'token';
 
@@ -65,6 +66,7 @@ apiRouter.post('/auth/login', async (req, res) => {
 apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
+    
     const existingIndex = statuses.findIndex((s) => s.name === user.email);
 
     if (existingIndex >= 0) {
@@ -191,7 +193,7 @@ async function createUser(email, password) {
     password: passwordHash,
     token: uuid.v4(),
     friends: [],
-    avatar: '/avatar.JPG',
+    avatar: '/avatar1.JPG',
   };
   users.push(user);
 
