@@ -8,10 +8,6 @@ const DB = require('./database.js');
 const authCookieName = 'token';
 
 
-let users = [];
-let statuses = [];
-
-
 /*
 name: username,
 status: mystatus,
@@ -54,6 +50,7 @@ apiRouter.post('/auth/login', async (req, res) => {
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
+      await DB.updateUser(user);
       setAuthCookie(res, user.token);
       res.send({ email: user.email });
       return;
@@ -67,14 +64,13 @@ apiRouter.delete('/auth/logout', async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
     
-    const existingIndex = statuses.findIndex((s) => s.name === user.email);
-
-    if (existingIndex >= 0) {
-      statuses[existingIndex].present = 'Offline';
-      statuses[existingIndex].date = new Date().toLocaleString();
+    const mystatus = await DB.getmystatus(user);
+    if (mystatus){
+      mystatus.present = "Offline";
+      mystatus.date = new Date().toLocaleString();
+      await DB.addorupdatestatus(mystatus)
     }
-
-    delete user.token;
+    await DB.updateUserRemoveAuth(user)
   }
   res.clearCookie(authCookieName);
   res.status(204).end();
@@ -93,18 +89,7 @@ const verifyAuth = async (req, res, next) => {
 // GetScores
 apiRouter.get('/status', verifyAuth, async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
-  const friends = user.friends || [];
-  const visible = statuses.filter((s) => {
-    return (
-      s.name === user.email ||
-      friends.includes(s.name)
-    );
-  });
-  visible.sort((a, b) => {
-    if (a.name === user.email) return -1;
-    if (b.name === user.email) return 1;
-    return 0;
-  });
+  const visible = await DB.getStatuses(user);
 
   res.send(visible);
 });
@@ -120,13 +105,9 @@ apiRouter.post('/status', verifyAuth, async (req, res) => {
     date: new Date().toLocaleString(),
   };
 
-  const existingIndex = statuses.findIndex((s) => s.name === newStatus.name);
-
-  if (existingIndex >= 0) {
-    statuses[existingIndex] = newStatus;
-  } else {
-    statuses.push(newStatus);
-  }
+  await DB.addorupdatestatus(newStatus);
+  const statuses = await DB.getStatuses(user);
+  
 
   res.send(statuses);
 });
@@ -136,8 +117,14 @@ apiRouter.post('/friends', verifyAuth, async (req, res) => {
 
   const user = await findUser('token', req.cookies[authCookieName]);
 
+  if (!user.friends){
+    user.friends = [];
+  }
 
-  user.friends.push(newfriend);
+  if (newfriend){
+    user.friends.push(newfriend);
+    await DB.updateUser(user);
+  }
 
 
   res.send(user.friends);
@@ -166,6 +153,7 @@ apiRouter.post('/avatar', verifyAuth, async (req, res) => {
 
   if (user) {
     user.avatar = req.body.avatar;
+    await DB.updateUser(user);
     res.send({ avatar: user.avatar });
   } else {
     res.status(401).send({ msg: 'Unauthorized' });
@@ -195,15 +183,19 @@ async function createUser(email, password) {
     friends: [],
     avatar: '/avatar1.JPG',
   };
-  users.push(user);
 
+ 
+  await DB.addUser(user);
   return user;
 }
 
 async function findUser(field, value) {
   if (!value) return null;
 
-  return users.find((u) => u[field] === value);
+  if (field === 'token') {
+    return DB.getUserByToken(value);
+  }
+  return DB.getUser(value);
 }
 
 // setAuthCookie in the HTTP response
