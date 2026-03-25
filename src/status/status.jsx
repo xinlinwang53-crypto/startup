@@ -62,33 +62,7 @@ export function Status(props) {
 
 
 
-  const statusRows = [];
-
-  if (status.length) {
-    for (const [i, statu] of status.entries()) {
-      statusRows.push(
-        <tr key={i}>
-          <td><img
-
-            src={statu.avatar}
-            alt="avatar option"
-            className="avatar-option"
-          />
-          </td>
-          <td>{statu.name.split('@')[0]}</td>
-          <td>{statu.status}</td>
-          <td>{statu.present}</td>
-          <td>{statu.date}</td>
-        </tr>
-      );
-    }
-  } else {
-    statusRows.push(
-      <tr key='0'>
-        <td colSpan='5' className="h2-"><h5>Tell your friend to join!</h5></td>
-      </tr>
-    );
-  }
+  
 
   const updateMyStatus = (newStatusText) => {
 
@@ -164,8 +138,41 @@ export function Status(props) {
       .then((res) => res.json())
       .then((data) => {
         setAvatar(data.avatar);
+        return fetch('/api/status');
+      })
+      .then((res) => res.json())
+      .then((data) => {
+      setStatus(data);
       });
   };
+
+  const statusRows = [];
+
+  if (status.length) {
+    for (const [i, statu] of status.entries()) {
+      statusRows.push(
+        <tr key={i}>
+          <td><img
+
+            src={statu.avatar}
+            alt="avatar option"
+            className="avatar-option"
+          />
+          </td>
+          <td>{statu.name.split('@')[0]}</td>
+          <td>{statu.status}</td>
+          <td>{statu.present}</td>
+          <td>{statu.date}</td>
+        </tr>
+      );
+    }
+  } else {
+    statusRows.push(
+      <tr key='0'>
+        <td colSpan='5' className="h2-"><h5>Tell your friend to join!</h5></td>
+      </tr>
+    );
+  }
 
   return (
     <main className="main-theme grid-sepe">
