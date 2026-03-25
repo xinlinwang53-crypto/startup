@@ -70,7 +70,7 @@ export function Status(props) {
         <tr key={i}>
           <td><img
 
-            src={avatar}
+            src={statu.avatar}
             alt="avatar option"
             className="avatar-option"
           />

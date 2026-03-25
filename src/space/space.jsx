@@ -64,7 +64,7 @@ export function Space(props) {
               {online.map((u,i) => (
                 <section className="each-avatar" key={i}>
                   <div className="avatar-">
-                    <img className="avatar-" alt={u.name} src={avatar} />
+                    <img className="avatar-" alt={u.name} src={u.avatar} />
                   </div>
 
                   <div className="statue">

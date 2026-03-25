@@ -60,6 +60,10 @@ async function getStatuses(user) {
         ]
     }).toArray();
 
+    for (const statu of statuslist) {
+    const OneUser = await getUser(statu.name);
+    statu.avatar = OneUser.avatar;}
+
     statuslist.sort((a, b) => {
         if (a.name === user.email) return -1;
         if (b.name === user.email) return 1;
