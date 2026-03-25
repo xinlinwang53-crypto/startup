@@ -67,7 +67,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
     const mystatus = await DB.getmystatus(user);
     if (mystatus){
       mystatus.present = "Offline";
-      mystatus.date = new Date().toLocaleString();
+      mystatus.date = new Date().toISOString();;
       await DB.addorupdatestatus(mystatus)
     }
     await DB.updateUserRemoveAuth(user)
@@ -102,7 +102,7 @@ apiRouter.post('/status', verifyAuth, async (req, res) => {
     name: user.email,
     status: req.body.status,
     present: req.body.present || 'Online',
-    date: new Date().toLocaleString(),
+    date: new Date().toISOString(),
   };
 
   await DB.addorupdatestatus(newStatus);

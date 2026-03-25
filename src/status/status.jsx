@@ -162,7 +162,7 @@ export function Status(props) {
           <td>{statu.name.split('@')[0]}</td>
           <td>{statu.status}</td>
           <td>{statu.present}</td>
-          <td>{statu.date}</td>
+          <td>{new Date(statu.date).toLocaleString()}</td>
         </tr>
       );
     }
