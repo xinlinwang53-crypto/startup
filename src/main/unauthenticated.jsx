@@ -44,12 +44,14 @@ export function Unauthenticated(props) {
           <span className='input-group-text'>🔒</span>
           <input className='form-control' type='password' onChange={(e) => setPassword(e.target.value)} placeholder='password' />
         </div>
+        <div className = "au-button">
         <button type="button" className="btn lg-theme" onClick={() => loginUser()} disabled={!userName || !password}>
           Login
         </button>
         <button type="button" className="btn lg-theme-2" onClick={() => createUser()} disabled={!userName || !password}>
           Create
         </button>
+        </div>
       </div>
 
       <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />

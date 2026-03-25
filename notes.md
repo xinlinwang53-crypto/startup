@@ -76,7 +76,7 @@ Handling the toggling of the checkboxes was particularly interesting.
 
 优化建议：
 选择图片
-可以tyoe状态
+可以tyoe状态 
 可以选择是否进入space
 space可以优化
 
@@ -85,3 +85,9 @@ space可以优化
 那个localstorage很有点问题，完全不建议用local、
 手机版点出来看着排版很垃圾
 offline 跟online这个要实现
+
+
+bug: 1.手机打开有问题 2.login create颜色问题 3.没登陆不应该看得见其他的东西 4.照片为啥一开始会闪？ 5. 考虑更新照片uoload
+
+
+./deployService.sh -k ~/downloads/cs260_key.pem -h xinlin260.click -s startup

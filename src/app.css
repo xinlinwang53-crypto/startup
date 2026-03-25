@@ -35,8 +35,19 @@ header {
   font-weight: 700;
   text-align: center;
 }
+.au-button{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
 .lg-theme {
   background-color: #12f0a6;
+}
+
+.lg-theme-2 {
+  background-color: white;
 }
 
 .lg-theme:disabled{
@@ -47,7 +58,8 @@ header {
 
 
 .lg-theme-2:disabled{
-  border-color:#12f0a6;
+  border-color:#d4bb19;
+
 
 }
 

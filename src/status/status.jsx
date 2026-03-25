@@ -9,7 +9,7 @@ export function Status(props) {
   const [status, setStatus] = React.useState([])
   const [friendName, setfriendName] = React.useState('')
   const [friends, setFriends] = React.useState([]);
-  const [avatar, setAvatar] = React.useState('/avatar.JPG');
+  const [avatar, setAvatar] = React.useState('/avatar1.JPG');
 
 
 
