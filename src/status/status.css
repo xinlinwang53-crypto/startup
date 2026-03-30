@@ -19,7 +19,6 @@
   align-items: start;
 }
 
-/* LEFT PANEL */
 .left{
   display: flex;
   flex-direction: column;
@@ -97,7 +96,6 @@
   transform: translateY(-1px);
 }
 
-/* RIGHT SIDE */
 .right{
   min-width: 0;
   display: flex;
@@ -105,7 +103,6 @@
   gap: 1.25rem;
 }
 
-/* top panel */
 section.add-friend{
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(220px, 0.92fr);
@@ -149,7 +146,6 @@ section.add-friend > div:first-child{
   box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.18);
 }
 
-/* 只锁定按钮本身，避免误伤 section.add-friend */
 button.add-friend{
   padding: 0.92rem 1.15rem;
   border: none;
@@ -169,7 +165,6 @@ button.add-friend:hover{
   filter: brightness(1.03);
 }
 
-/* friends block */
 .friend-list{
   padding: 0.1rem 0;
 }
@@ -193,12 +188,11 @@ button.add-friend:hover{
   overflow-wrap: anywhere;
 }
 
-/* empty friend text */
 .friend-list > div:last-child{
   color: #dcecff;
 }
 
-/* TABLE */
+
 .table{
   margin-bottom: 0;
   border-radius: 28px;
@@ -239,14 +233,12 @@ button.add-friend:hover{
   background-color: #eef8ff;
 }
 
-/* 空表提示 */
 .h2-{
   text-align: center;
   padding: 1.35rem !important;
   color: #334155;
 }
 
-/* 让表格里那个小头像更像列表头像 */
 #status .avatar-option{
   width: 54px;
   height: 54px;
@@ -261,7 +253,7 @@ button.add-friend:hover{
   box-shadow: none;
 }
 
-/* 响应式 */
+
 @media (max-width: 1080px){
   .grid-sepe{
     grid-template-columns: 1fr;
