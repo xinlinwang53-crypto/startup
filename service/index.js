@@ -86,7 +86,7 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-// GetScores
+// GetStatus
 apiRouter.get('/status', verifyAuth, async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   const visible = await DB.getStatuses(user);
@@ -94,7 +94,7 @@ apiRouter.get('/status', verifyAuth, async (req, res) => {
   res.send(visible);
 });
 
-// SubmitScore
+// Poststatus
 apiRouter.post('/status', verifyAuth, async (req, res) => {
   const user = await findUser('token', req.cookies[authCookieName]);
 

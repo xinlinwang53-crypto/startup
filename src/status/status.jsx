@@ -2,7 +2,7 @@ import React from 'react';
 import './status.css';
 
 export function Status(props) {
-  const username = props.userName || localStorage.getItem('userName') || 'Xinlin';;
+  const username = props.userName || localStorage.getItem('userName');
 
 
   const [mystatus, setmystatus] = React.useState(localStorage.getItem("mystatus") || "Studying");
