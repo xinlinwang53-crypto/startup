@@ -14,37 +14,17 @@ export function Status(props) {
 
 
   React.useEffect(() => {
-    fetch('/api/status')
-      .then((res) => res.json())
-      .then((data) => {
-        setStatus(data);
-      })
-      .catch(() => {
 
 
-        const defaultStatus = [
-          {
-            name: username,
-            status: mystatus,
-            present: 'Online',
-            date: new Date().toLocaleString(),
-          },
-          {
-            name: 'lily@byu.edu',
-            status: 'Open to talk',
-            present: 'Offline',
-            date: '2/24/2026 10:30 AM',
-          },
-          {
-            name: 'jimmy@byu.edu',
-            status: 'Coding',
-            present: 'Online',
-            date: '2/24/2026 11:10 AM',
-          },
-        ];
+    const loadStatus = () => {
+      fetch('/api/status')
+        .then((res) => res.json())
+        .then((data) => {
+          setStatus(data);
+        });
+    };
 
-        setStatus(defaultStatus);
-      });
+    loadStatus()
 
     fetch('/api/friends')
       .then((res) => res.json())
@@ -57,12 +37,28 @@ export function Status(props) {
       .then((data) => {
         setAvatar(data.avatar);
       });
+
+
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+    socket.onmessage = async (event) => {
+      const msg = JSON.parse(await event.data);
+
+      if (msg.type === 'statusUpdated') {
+        loadStatuses();
+      }
+    };
+
+    return () => {
+      socket.close();
+    };
   }, [])
 
 
 
 
-  
+
 
   const updateMyStatus = (newStatusText) => {
 
@@ -142,7 +138,7 @@ export function Status(props) {
       })
       .then((res) => res.json())
       .then((data) => {
-      setStatus(data);
+        setStatus(data);
       });
   };
 
