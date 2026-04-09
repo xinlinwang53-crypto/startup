@@ -135,8 +135,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - The post/status in my service-index.js connects with websocket. 
+- [x] **Frontend makes WebSocket connection** - The status.jsx connect with websocket to make live changes about status. 
+- [x] **Data sent over WebSocket connection** - The service-peerProxy.js is responsible for the websocket connection for each user. 
+- [x] **WebSocket data displayed** - The status.jsx will react.useeffect the updated statu and display the change in the friend statu chart. 
+- [x] **Application is fully functional** - The overall function is fully functinal.
