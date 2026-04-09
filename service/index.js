@@ -109,6 +109,8 @@ apiRouter.post('/status', verifyAuth, async (req, res) => {
   await DB.addorupdatestatus(newStatus);
   const statuses = await DB.getStatuses(user);
 
+  console.log('broadcasting statusUpdated for', user.email);
+
   broadcastEvent({
     type:"statusUpdated",
     name: user.email,
@@ -218,7 +220,7 @@ function setAuthCookie(res, authToken) {
   });
 }
 
-app.listen(port, () => {
+const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 

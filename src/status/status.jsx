@@ -42,11 +42,15 @@ export function Status(props) {
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
     const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
+    socket.onopen = () => {
+      console.log('websocket connected');
+    };
+
     socket.onmessage = async (event) => {
-      const msg = JSON.parse(await event.data);
+      const msg = JSON.parse(event.data);
 
       if (msg.type === 'statusUpdated') {
-        loadStatuses();
+        loadStatus();
       }
     };
 
