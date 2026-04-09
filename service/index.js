@@ -4,7 +4,7 @@ const express = require('express');
 const uuid = require('uuid');
 const app = express();
 const DB = require('./database.js');
-const { peerProxy } = require('./peerProxy.js');
+const { peerProxy, broadcastEvent } = require('./peerProxy.js');
 
 const authCookieName = 'token';
 
@@ -108,6 +108,12 @@ apiRouter.post('/status', verifyAuth, async (req, res) => {
 
   await DB.addorupdatestatus(newStatus);
   const statuses = await DB.getStatuses(user);
+
+  broadcastEvent({
+    type:"statusUpdated",
+    name: user.email,
+  });
+
   
 
   res.send(statuses);
@@ -215,3 +221,6 @@ function setAuthCookie(res, authToken) {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+
+peerProxy(httpService);
